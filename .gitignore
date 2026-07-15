@@ -1,0 +1,22 @@
+# Rust and Soroban build output
+/target/
+
+# Local Stellar identities and deployed runtime configuration
+/.stellar/
+
+# Frontend dependencies and builds
+/app/node_modules/
+/app/dist/
+/app/.npm-cache/
+/app/android/.gradle/
+/app/android/build/
+/app/android/app/build/
+/app/android/local.properties
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log

@@ -1,0 +1,5 @@
+LinearLayout id=id/action_bar_root bounds=[0,63][1080,1857]
+  FrameLayout id=android:id/content bounds=[0,63][1080,1857]
+    WebView id=id/webview flags=clickable,focusable bounds=[0,63][1080,1857]
+View id=android:id/statusBarBackground bounds=[0,0][1080,63]
+View id=android:id/navigationBarBackground bounds=[0,1857][1080,1920]

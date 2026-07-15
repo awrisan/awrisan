@@ -1,0 +1,21 @@
+[package]
+name = "arisan-rooms"
+version = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+# Build the days-based timings for the mainnet candidate. The default build
+# uses the demo / preview timings (seconds-based) so a full N=3 cycle is
+# observable in a short demo. See contracts/arisan_rooms/src/lib.rs.
+production-cadences = []
+
+[dependencies]
+soroban-sdk = { workspace = true }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }

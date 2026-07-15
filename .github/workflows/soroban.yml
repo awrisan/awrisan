@@ -1,0 +1,93 @@
+name: Soroban contract
+
+on:
+  push:
+    paths:
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "contracts/**"
+      - ".github/workflows/soroban.yml"
+  pull_request:
+    paths:
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "contracts/**"
+      - ".github/workflows/soroban.yml"
+  workflow_dispatch:
+    inputs:
+      deploy_testnet:
+        description: "Deploy and initialize a fresh contract on Stellar Testnet"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Test, build, and inspect WASM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+          components: rustfmt
+
+      - name: Install Stellar CLI
+        uses: stellar/stellar-cli@v27.0.0
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run contract tests
+        run: cargo test --locked -p arisan-rooms
+
+      - name: Build contract WASM
+        run: stellar contract build --locked --package arisan-rooms
+
+      - name: Upload verified WASM
+        uses: actions/upload-artifact@v4
+        with:
+          name: arisan-rooms-wasm
+          path: target/wasm32v1-none/release/arisan_rooms.wasm
+          if-no-files-found: error
+      - name: Create funded deployer
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_testnet
+        run: stellar keys generate ci-deployer --network testnet --fund
+
+      - name: Deploy and initialize on Testnet
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_testnet
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTRACT_ID="$(stellar contract deploy \
+            --wasm target/wasm32v1-none/release/arisan_rooms.wasm \
+            --source ci-deployer \
+            --network testnet)"
+          TOKEN_ID="$(stellar contract id asset --asset native --network testnet)"
+          stellar contract invoke \
+            --id "$CONTRACT_ID" \
+            --source ci-deployer \
+            --network testnet \
+            -- initialize \
+            --token "$TOKEN_ID"
+          printf '{"network":"testnet","contractId":"%s","tokenId":"%s","commit":"%s"}\n' \
+            "$CONTRACT_ID" "$TOKEN_ID" "$GITHUB_SHA" > deployment.json
+          {
+            echo "## Awrisan Testnet deployment"
+            echo "Contract ID: \`$CONTRACT_ID\`"
+            echo "Token ID: \`$TOKEN_ID\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload public deployment metadata
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_testnet
+        uses: actions/upload-artifact@v4
+        with:
+          name: awrisan-testnet-deployment
+          path: deployment.json
+          if-no-files-found: error
