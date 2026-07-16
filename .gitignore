@@ -2,7 +2,12 @@
 /target/
 
 # Local Stellar identities and deployed runtime configuration
-/.stellar/
+# .stellar: commit the on-chain evidence, never the keys
+/.stellar/*
+!/.stellar/rooms.json
+!/.stellar/awrisan-runtime.json
+/.stellar/identity/
+/.stellar/github-deployment/
 
 # Frontend dependencies and builds
 /app/node_modules/

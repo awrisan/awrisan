@@ -1,0 +1,516 @@
+[
+  {
+    "id": "stellar-7",
+    "chainRoomId": 7,
+    "code": "AWRDA572C",
+    "name": "Arisan Sahabat",
+    "host": "Dina Prameswari",
+    "contribution": 2500000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 6,
+    "paidCount": 6,
+    "pool": 15000000,
+    "round": 1,
+    "nextDate": "17 Jul 2026, 19.00",
+    "drawAt": "2026-07-17T12:00:00.000Z",
+    "firstKocok": 1784289600,
+    "nextKocok": 1784289600,
+    "cadence": "Weekly",
+    "scheduleAgreed": true,
+    "status": "sealed",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "ddec3901226acf2bedd57da17479ef07b1b19d0b0d3ba148f4754f3f6b40e94b",
+    "history": [],
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 2500000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 2500000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 2500000,
+        "paid": true
+      },
+      {
+        "id": "GBLSMYJJB7UTRNQUCBDQQA356F3O4CXO6LOR3NQCIPI6IQJDHNBQYKSA",
+        "name": "Lilis Handayani",
+        "address": "GBLSMYJJB7UTRNQUCBDQQA356F3O4CXO6LOR3NQCIPI6IQJDHNBQYKSA",
+        "amount": 2500000,
+        "paid": true
+      },
+      {
+        "id": "GD7FL4MI3CTQQGIF77Y7U5WCYQ3MEKFNCRW3TR7Y5VGPU4X4ODIJ5B4S",
+        "name": "Maya Kartika",
+        "address": "GD7FL4MI3CTQQGIF77Y7U5WCYQ3MEKFNCRW3TR7Y5VGPU4X4ODIJ5B4S",
+        "amount": 2500000,
+        "paid": true
+      },
+      {
+        "id": "GB2NN53OKKFQD7ZNIGX6HOVT6X2I2F3XQSBC54XDVCLNKT7BKIXGAQYJ",
+        "name": "Nia Ramadhani",
+        "address": "GB2NN53OKKFQD7ZNIGX6HOVT6X2I2F3XQSBC54XDVCLNKT7BKIXGAQYJ",
+        "amount": 2500000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "49cb70ef8997e9f1d7befb3e13c30f794dd9277ae4aace3c303ae3a30a628d2d"
+  },
+  {
+    "id": "stellar-6",
+    "chainRoomId": 6,
+    "code": "AWRDE2767",
+    "name": "Arisan Test2",
+    "host": "Dina Prameswari",
+    "contribution": 1000000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 3,
+    "paidCount": 3,
+    "pool": 3000000,
+    "round": 3,
+    "nextDate": "16 Jul 2026, 12.06",
+    "firstKocok": 1784178278,
+    "status": "paid",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "c458c34c552c780796f4284a74b3036dab2f0389c9a5b13b1f23b84a6a3e7335",
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 1000000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "48f9c98ce400321f3d36c051fd41a8007299d5e026bc9da863da1cd1dc361e46",
+    "winner": "Rani Wulandari",
+    "result": {
+      "roomId": "stellar-6",
+      "roomName": "Arisan Test2",
+      "round": 3,
+      "winner": "Rani Wulandari",
+      "winnerAddress": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+      "firstName": "Rani",
+      "amount": 3000000,
+      "participants": 3,
+      "transactionId": "0208a1fc9fd173ada365af082885703a65ba2b62cf1884d35aa375ea4387d58d",
+      "sealTransactionId": "aa497dd1c4157f881ad656eb4b11f80a6aa13b1ef6ef7e068bdd841712164cba",
+      "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+      "source": "stellar",
+      "timestamp": "16 Juli 2026 pukul 13.24"
+    },
+    "history": [
+      {
+        "roomId": "stellar-6",
+        "roomName": "Arisan Test2",
+        "round": 1,
+        "winner": "Sari Kusuma",
+        "winnerAddress": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "firstName": "Sari",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "a81862a0ce076f6d0262e2eb95b1ca834ebf05d7383400f8ef544b1c8e83cd9b",
+        "sealTransactionId": "10c18162fd04c76fd47566e88994cbbaf78a5cf464d48696e4b07a937c27b931",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 12.05"
+      },
+      {
+        "roomId": "stellar-6",
+        "roomName": "Arisan Test2",
+        "round": 2,
+        "winner": "Dina Prameswari",
+        "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "firstName": "Dina",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "d68eb57240a476e5913067228b591223bd9d993081a7b4037e42c413fc2ada3a",
+        "sealTransactionId": "6bed17c0df1fd4a3fe30cc89f9f5aacd8c30ceb419481e42d7e4c8b2e6e17f31",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 13.06"
+      },
+      {
+        "roomId": "stellar-6",
+        "roomName": "Arisan Test2",
+        "round": 3,
+        "winner": "Rani Wulandari",
+        "winnerAddress": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "firstName": "Rani",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "0208a1fc9fd173ada365af082885703a65ba2b62cf1884d35aa375ea4387d58d",
+        "sealTransactionId": "aa497dd1c4157f881ad656eb4b11f80a6aa13b1ef6ef7e068bdd841712164cba",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 13.24"
+      }
+    ],
+    "nextKocok": null
+  },
+  {
+    "id": "stellar-5",
+    "chainRoomId": 5,
+    "code": "AWR468BCD",
+    "name": "Arisan Sahabat",
+    "host": "Dina Prameswari",
+    "contribution": 1000000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 3,
+    "paidCount": 3,
+    "pool": 3000000,
+    "round": 3,
+    "nextDate": "16 Jul 2026, 00.01",
+    "firstKocok": 1784134762,
+    "status": "paid",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "d2b0d1d630ea095d280937d8cfecf6059da8c3fcb157ff67e9e74d4dfd6ff87a",
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 1000000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "2e65bf6cbf7bcdef8ef7bbc41a42f405d7e35be1484005419ae372e508190eae",
+    "winner": "Sari Kusuma",
+    "result": {
+      "roomId": "stellar-5",
+      "roomName": "Arisan Sahabat",
+      "round": 3,
+      "winner": "Sari Kusuma",
+      "winnerAddress": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+      "firstName": "Sari",
+      "amount": 3000000,
+      "participants": 3,
+      "transactionId": "b30484f9ee6cf3970d6662f99a0d4615a75dfc4a33fa78823fb32fb224e31986",
+      "sealTransactionId": "4caafcb96e1e1a5f60e6458fce86b0a7307198c6717d8684e8c952cc75e622e5",
+      "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+      "source": "stellar",
+      "timestamp": "16 Juli 2026 pukul 13.13"
+    },
+    "history": [
+      {
+        "roomId": "stellar-5",
+        "roomName": "Arisan Sahabat",
+        "round": 1,
+        "winner": "Rani Wulandari",
+        "winnerAddress": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "firstName": "Rani",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "7e851cde2fc37f64d2e1ef4fad9a3f555467a222c5d030f291e2313261346375",
+        "sealTransactionId": "96c6ee166fb8d88fda94182d983f3a77dd7a0cfd6430462e47d428c87c9252c7",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 00.02"
+      },
+      {
+        "roomId": "stellar-5",
+        "roomName": "Arisan Sahabat",
+        "round": 2,
+        "winner": "Dina Prameswari",
+        "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "firstName": "Dina",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "bf82bcc767c93b84839018a5d32ecbe7d93fa2ed2fb6ab07943f9e7498f4e4b2",
+        "sealTransactionId": "29d25c8687f446afada6f5e8b360398436757845fc6abfda3b78f67e63a9f23d",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 13.12"
+      },
+      {
+        "roomId": "stellar-5",
+        "roomName": "Arisan Sahabat",
+        "round": 3,
+        "winner": "Sari Kusuma",
+        "winnerAddress": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "firstName": "Sari",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "b30484f9ee6cf3970d6662f99a0d4615a75dfc4a33fa78823fb32fb224e31986",
+        "sealTransactionId": "4caafcb96e1e1a5f60e6458fce86b0a7307198c6717d8684e8c952cc75e622e5",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "16 Juli 2026 pukul 13.13"
+      }
+    ],
+    "nextKocok": null
+  },
+  {
+    "id": "stellar-4",
+    "chainRoomId": 4,
+    "code": "AWR2B0D20",
+    "name": "Arisan Sahabat",
+    "host": "Dina Prameswari",
+    "contribution": 1000000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 3,
+    "paidCount": 3,
+    "pool": 3000000,
+    "round": 2,
+    "nextDate": "15 Jul 2026, 23.49",
+    "firstKocok": 1784134131,
+    "status": "sealed",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "bef7362d99b5073dbdd402ed83f02e9a017e8556669288fe4367fece6f8c2a81",
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 1000000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "7a9fcb1d0629fd513b029dca16bcbad73bfc3d269860f2cb7f1b52028170b8b4",
+    "winner": "Dina Prameswari",
+    "result": {
+      "roomId": "stellar-4",
+      "roomName": "Arisan Sahabat",
+      "round": 1,
+      "winner": "Dina Prameswari",
+      "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+      "firstName": "Dina",
+      "amount": 3000000,
+      "participants": 3,
+      "transactionId": "75fa496dc74885426fe2f5946be3af41a3e05ab3b42c0675dff42cec2bd7e41d",
+      "sealTransactionId": "78867fb5585183c76f2b885874343d5334d8504cc2b8ea9251addebd6386cdaa",
+      "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+      "source": "stellar",
+      "timestamp": "15 Juli 2026 pukul 23.50"
+    },
+    "history": [
+      {
+        "roomId": "stellar-4",
+        "roomName": "Arisan Sahabat",
+        "round": 1,
+        "winner": "Dina Prameswari",
+        "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "firstName": "Dina",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "75fa496dc74885426fe2f5946be3af41a3e05ab3b42c0675dff42cec2bd7e41d",
+        "sealTransactionId": "78867fb5585183c76f2b885874343d5334d8504cc2b8ea9251addebd6386cdaa",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "15 Juli 2026 pukul 23.50"
+      }
+    ],
+    "nextKocok": 1784134191
+  },
+  {
+    "id": "stellar-2",
+    "chainRoomId": 2,
+    "code": "AWR5C6241",
+    "name": "Arisan Sahabat",
+    "host": "Dina Prameswari",
+    "contribution": 1000000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 3,
+    "paidCount": 3,
+    "pool": 3000000,
+    "round": 2,
+    "nextDate": "15 Jul 2026, 22.08",
+    "firstKocok": 1784128071,
+    "status": "sealed",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "ad365cb7f337e8e04c2e12a11604b57705012277e360a7096e962c44076a9be4",
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 1000000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 1000000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "597068c6bb074e11486495cff4b412255ad326234495b2c6ec3ece1d4df94291",
+    "winner": "Dina Prameswari",
+    "result": {
+      "roomId": "stellar-2",
+      "roomName": "Arisan Sahabat",
+      "round": 1,
+      "winner": "Dina Prameswari",
+      "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+      "firstName": "Dina",
+      "amount": 3000000,
+      "participants": 3,
+      "transactionId": "e409c8fc2e3e1b2074a82661aebcd1eba6a2208a0daa0b8271758c857ead36f0",
+      "sealTransactionId": "8be10ebd14397e7c7dd4ff433ee221eca8cf8d95c5a719d92296bdcbec491279",
+      "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+      "source": "stellar",
+      "timestamp": "15 Juli 2026 pukul 22.32"
+    },
+    "history": [
+      {
+        "roomId": "stellar-2",
+        "roomName": "Arisan Sahabat",
+        "round": 1,
+        "winner": "Dina Prameswari",
+        "winnerAddress": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "firstName": "Dina",
+        "amount": 3000000,
+        "participants": 3,
+        "transactionId": "e409c8fc2e3e1b2074a82661aebcd1eba6a2208a0daa0b8271758c857ead36f0",
+        "sealTransactionId": "8be10ebd14397e7c7dd4ff433ee221eca8cf8d95c5a719d92296bdcbec491279",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "15 Juli 2026 pukul 22.32"
+      }
+    ],
+    "nextKocok": 1784128131
+  },
+  {
+    "id": "stellar-1",
+    "chainRoomId": 1,
+    "code": "AWRAD0F97",
+    "name": "QA Testnet Juli",
+    "host": "Dina Prameswari",
+    "contribution": 500000,
+    "onChainShareStroops": 1000000,
+    "memberLimit": 3,
+    "paidCount": 3,
+    "pool": 1500000,
+    "round": 2,
+    "nextDate": "15 Jul 2026, 20.16",
+    "firstKocok": 1784121324,
+    "status": "sealed",
+    "source": "stellar",
+    "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+    "transactionId": "bf503c6f556df9a7457392fb3122a90c62942d61bc3121e087e60f7f814e661d",
+    "members": [
+      {
+        "id": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "name": "Dina Prameswari",
+        "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR",
+        "amount": 500000,
+        "paid": true
+      },
+      {
+        "id": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "name": "Rani Wulandari",
+        "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "amount": 500000,
+        "paid": true
+      },
+      {
+        "id": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "name": "Sari Kusuma",
+        "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED",
+        "amount": 500000,
+        "paid": true
+      }
+    ],
+    "startTransactionId": "a9cdc2ed998148f231ca710473ed56935ca0c492ebaf751b09f467613822db00",
+    "winner": "Rani Wulandari",
+    "result": {
+      "roomId": "stellar-1",
+      "roomName": "QA Testnet Juli",
+      "round": 1,
+      "winner": "Rani Wulandari",
+      "winnerAddress": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+      "firstName": "Rani",
+      "amount": 1500000,
+      "participants": 3,
+      "transactionId": "1bd1427e3d1b95c08bb7695ac6ce858005dcbfb5b20c0c82f2eb44c12ec15574",
+      "sealTransactionId": "fc8a61ba228f4278f02b3a5666f6ff2f229bd2f27eec10b4b2dac769312d20a8",
+      "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+      "source": "stellar",
+      "timestamp": "15 Juli 2026 pukul 20.16"
+    },
+    "history": [
+      {
+        "roomId": "stellar-1",
+        "roomName": "QA Testnet Juli",
+        "round": 1,
+        "winner": "Rani Wulandari",
+        "winnerAddress": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS",
+        "firstName": "Rani",
+        "amount": 1500000,
+        "participants": 3,
+        "transactionId": "1bd1427e3d1b95c08bb7695ac6ce858005dcbfb5b20c0c82f2eb44c12ec15574",
+        "sealTransactionId": "fc8a61ba228f4278f02b3a5666f6ff2f229bd2f27eec10b4b2dac769312d20a8",
+        "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+        "source": "stellar",
+        "timestamp": "15 Juli 2026 pukul 20.16"
+      }
+    ],
+    "nextKocok": 1784121384
+  }
+]

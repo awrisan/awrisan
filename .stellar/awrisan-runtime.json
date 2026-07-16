@@ -1,0 +1,60 @@
+{
+  "network": "testnet",
+  "rpcUrl": "https://soroban-testnet.stellar.org",
+  "explorerBaseUrl": "https://stellar.expert/explorer/testnet",
+  "contractId": "CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX",
+  "tokenId": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+  "members": [
+    {
+      "alias": "awrisan-dina",
+      "name": "Dina Prameswari",
+      "address": "GCANYLS5NNU2RERJZLFN6522I37PZPNRPYSUYL2MMUQME6JAJA2UUVYR"
+    },
+    {
+      "alias": "awrisan-rani",
+      "name": "Rani Wulandari",
+      "address": "GDQR45VM7CP4A6J6TGBNCSMZ3S6HKDTGLNZ576A5YYGKTBN3SSG2J6NS"
+    },
+    {
+      "alias": "awrisan-sari",
+      "name": "Sari Kusuma",
+      "address": "GBS4UB2FNG3VTNBCGLR7BOMYIT3L7NVNV5BJFU4Z77R5YYPRQ5AX2GED"
+    },
+    {
+      "alias": "awrisan-lilis",
+      "name": "Lilis Handayani",
+      "address": "GBLSMYJJB7UTRNQUCBDQQA356F3O4CXO6LOR3NQCIPI6IQJDHNBQYKSA"
+    },
+    {
+      "alias": "awrisan-maya",
+      "name": "Maya Kartika",
+      "address": "GD7FL4MI3CTQQGIF77Y7U5WCYQ3MEKFNCRW3TR7Y5VGPU4X4ODIJ5B4S"
+    },
+    {
+      "alias": "awrisan-nia",
+      "name": "Nia Ramadhani",
+      "address": "GB2NN53OKKFQD7ZNIGX6HOVT6X2I2F3XQSBC54XDVCLNKT7BKIXGAQYJ"
+    },
+    {
+      "alias": "awrisan-putri",
+      "name": "Putri Anindya",
+      "address": "GBH3OTVLITABS62YKCFM4XYIIA7KDLP4GN6MYI75VNGJKGZZXHHXJQUE"
+    },
+    {
+      "alias": "awrisan-wati",
+      "name": "Wati Lestari",
+      "address": "GBGWK7VR76ROXZ4DBWJZWTEHTGMVZ5NHVWWSG5KKM2AFZJR6LVHJCJMN"
+    },
+    {
+      "alias": "awrisan-yuni",
+      "name": "Yuni Rahma",
+      "address": "GB5GRZBEGTMZZAW6E4OHYHA4MD566KN5GTMSZBELR6ICHA3TTWC5GVEE"
+    },
+    {
+      "alias": "awrisan-tika",
+      "name": "Tika Permata",
+      "address": "GDQH3F6MLVGT2NGYILM4YFWP7FNSRQFHCSLRABEKZUEZKSV5UQTX2YKK"
+    }
+  ],
+  "configuredAt": "2026-07-16T05:33:37.064Z"
+}

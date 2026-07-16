@@ -1,0 +1,136 @@
+# Rise In Submission — Awrisan
+
+## Target
+
+**Stellar Journey to Mastery · Level 4 · Green Belt.**
+
+An advanced Soroban contract that custodies real value on testnet, with a
+frontend, tests, and CI.
+
+> We are **not** claiming Levels 5 to 7. Those require demonstrated user
+> traction, and Awrisan has none. See "What is NOT built" below. We would rather
+> be scored accurately at Green than be caught overclaiming at Blue.
+
+---
+
+## What Awrisan is, in one paragraph
+
+An arisan (Indonesian rotating savings circle, a ROSCA) has one structural
+failure: a human, the *bandar*, holds everyone's money. That person can vanish
+with it, and in Indonesia they regularly do. Awrisan replaces the bandar with a
+Soroban contract. Every member prefunds their full cycle commitment before round
+one, the contract draws a winner each round and pays the pot, and after N rounds
+every member has won exactly once and the room settles to zero. The culture
+stays. The custodian risk does not.
+
+---
+
+## Requirement to evidence
+
+| What a reviewer should check | Where | Status |
+|---|---|---|
+| Advanced Soroban contract, deployed | [`CDTNEK4E...G3EA`](https://stellar.expert/explorer/testnet/contract/CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX) on testnet | Live |
+| The contract really holds and moves value | [DEPLOYMENTS.md](DEPLOYMENTS.md): a **complete 3-round arisan cycle** on-chain, 8 transactions, all `successful` | Verifiable |
+| The deployed bytecode matches this source | [DEPLOYMENTS.md](DEPLOYMENTS.md): CI-built WASM hashes to `a822f243...dad8a`, byte-identical to the live contract instance | Verifiable |
+| Contract source | [`contracts/arisan_rooms/src/lib.rs`](contracts/arisan_rooms/src/lib.rs) | 100% |
+| Tests | [`contracts/arisan_rooms/src/test.rs`](contracts/arisan_rooms/src/test.rs), 11 tests | Passing |
+| CI | [`.github/workflows/soroban.yml`](.github/workflows/soroban.yml): `cargo fmt --check`, `cargo test --locked`, `stellar contract build --locked`, WASM uploaded as an artifact | Passing |
+| Frontend | `app/`: web, installable PWA, and an Android build via Capacitor | Runs locally |
+| Documentation | [README.md](README.md), bilingual (English and Bahasa Indonesia) | Complete |
+
+---
+
+## Verify it yourself in under five minutes
+
+```bash
+# 1. the contract is alive and holds state, no account needed
+stellar contract invoke --id CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX \
+  --network testnet -- room_count
+
+# 2. read a room that ran a full cycle to completion
+stellar contract invoke --id CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX \
+  --network testnet -- get_room --room_id 6
+
+# 3. the tests pass
+cargo test --locked -p arisan-rooms
+
+# 4. the source you just read compiles to the bytecode that is running
+gh run download 29420588469 -n arisan-rooms-wasm && sha256sum arisan_rooms.wasm
+# expect a822f2430d8612d9f11ce1701784e547a49fa78d8015904fc9b26125013dad8a
+```
+
+Or click any transaction in [DEPLOYMENTS.md](DEPLOYMENTS.md) and read it on
+stellar.expert. Nothing here requires trusting us.
+
+---
+
+## What the tests prove
+
+Each test name maps to a property the contract guarantees.
+
+| Test | Property it locks down |
+|---|---|
+| `prefund_full_cycle_zero_residual` | Money conservation is exact. N x N x s in, N pots out, contract balance ends at **zero**. No dust, no leak. |
+| `kocok_requires_seal_and_is_seed_determined` | The winner cannot be drawn without a seal, and is a pure function of the sealed seed. |
+| `cannot_seal_twice` | A round's seed cannot be re-rolled once fixed. |
+| `cannot_postpone_after_seal` | The host cannot postpone after the seal, which would otherwise let them re-roll. |
+| `host_can_postpone_each_round_once` | The host's only asymmetric power is bounded: once per round, capped in duration. |
+| `emergency_dissolve_after_unsealed_round_refunds_all` | The escape hatch is conservative: everyone owed is refunded, contract lands at zero. |
+| `host_can_cancel_open_room_and_refund_all` | Cancelling an unstarted room returns every prefund in full. |
+| `cannot_start_before_room_is_full` | No cycle begins underfunded. |
+| `wrong_code_cannot_join` | The invite code gates joining. |
+| `cannot_join_after_join_deadline` / `anyone_can_cancel_after_join_deadline` | Deadlines are enforced, and a stalled room cannot trap funds. |
+
+---
+
+## Why this is a real problem, not a hackathon premise
+
+Arisan fraud in Indonesia is prosecuted, repeatedly, with published verdicts.
+Three convictions we cite in [BUSINESS-CONCEPT.md](BUSINESS-CONCEPT.md):
+
+- **Gresik**, case `106/Pid.B/2025/PN Gsk`: Rp 1,662,550,000 taken from **63 victims**. Three years six months. **Zero restitution ordered**, meaning the victims got nothing back.
+- **Banjarmasin**: Rp 11 billion, **320 victims**.
+- **Salatiga**: two defendants, nine months each.
+
+In every one of these, the money was gone before anyone could look. That is not
+a people problem. It is a custody problem, and custody is the one thing a
+contract can fix.
+
+**Ecosystem gap:** we searched the Stellar ecosystem and the SCF funded list for
+any ROSCA, arisan, paluwagan, chit fund, tanda, susu, stokvel, chama, hui, kye,
+or equb implementation. There is none. The closest projects are community
+currencies, which is a different mechanism. Awrisan is filling an actual gap,
+not adding to a crowded category.
+
+---
+
+## What is NOT built
+
+Stated up front, because a reviewer will find these anyway and we would rather
+be the ones who told them.
+
+- **No user traction.** Zero real users. The identities in the demo rooms are our
+  own test accounts. This is why we target Green, not Blue.
+- **No public deployment yet.** The frontend runs locally. There is no hosted URL.
+- **No wallet integration yet.** A local gateway holds the test members' keys and
+  signs on their behalf. Real per-member signing (Freighter or passkey) is the
+  next milestone, and it is the prerequisite for any traction claim later.
+- **The draw is biasable.** A member willing to burn failed-transaction fees can
+  revert `seal_kocok` until the seed favours them. Prefunding bounds this to slot
+  ordering, never to principal, and never to anyone else's money. The intended
+  fix is commit-reveal bonded by the prefund that already exists. Documented in
+  the README and in the module docs. Not implemented yet.
+- **Room metadata is public.** The invite code gates joining, not discovery.
+- **Testnet only.** No mainnet, no real funds, no licences, no partnerships.
+
+---
+
+## Run it locally
+
+```bash
+cargo test --locked -p arisan-rooms       # contract tests
+cd app && npm install && npm run dev      # web and PWA
+```
+
+See the README for the full flow, including how the app falls back to local
+simulation when no testnet gateway is configured.

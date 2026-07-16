@@ -9,7 +9,7 @@
 //! exactly zero. Late payment, default, and abscond are structurally
 //! impossible because there is no payment owed after join.
 //!
-//! The draw is a TWO-PHASE on-chain PRNG so no caller can choose the winner:
+//! The draw is a TWO-PHASE on-chain PRNG:
 //!   1. `seal_kocok` draws a u64 seed from Soroban's ledger-seeded PRNG and
 //!      stores it for the round. It writes ONLY the fixed `Seal(room_id, round)`
 //!      key, so the seed value cannot change the tx footprint. That is why
@@ -19,12 +19,30 @@
 //!   2. `kocok` derives the winner deterministically from that sealed seed
 //!      (`unwon[seed % unwon_len]`), so the result is fixed before the tx and
 //!      is identical in simulation and execution.
-//! Fair under "Soroban PRNG is unpredictable"; an external VRF is the next
-//! hardening step. Honestly badged as a preview in the UI.
+//!
+//! KNOWN LIMITATION, stated plainly: the two phases defeat simulate-and-preview
+//! grinding, but they do NOT make the draw unbiasable. `seal_kocok` returns the
+//! seed in the same atomic transaction that writes the Seal, so a member can
+//! wrap the call, compute `unwon[seed % unwon_len]` themselves, and `panic!` to
+//! revert the whole transaction (Seal write included) whenever the winner is not
+//! them, then retry on a later ledger for a fresh seed. Expected cost is a few
+//! failed-transaction fees, which is fractions of a cent.
+//! Damage is bounded by prefunding, not by the PRNG: every member is owed the
+//! same pot (N × s), so a grinder can only buy an EARLIER SLOT (time value of
+//! money), never a larger payout, and never anyone else's principal. Slot order
+//! is still worth something in a real arisan, so this is a genuine weakness.
+//! The intended fix is commit-reveal bonded by the existing prefund (each member
+//! commits H(secret) at join, reveals per round, seed = H(concat(reveals)), and
+//! a non-revealer forfeits their locked share). An external VRF such as a
+//! threshold oracle is the alternative. Neither is implemented yet. Badged as a
+//! preview in the UI.
 //!
 //! One contract holds many rooms keyed by `room_id`. Each room has a unique
-//! 6-char invite code. That is the only way to find or join a room. There
-//! is NO discovery mechanism by design.
+//! 6-char invite code, and that code is the only way to JOIN a room.
+//! It is not a discovery gate: `room_count`, `get_room`, and `get_members` are
+//! public reads, so anyone can walk `room_id` 1..room_count and see a room's
+//! name, host, share, schedule, and full roster without an invite code. Joining
+//! is gated. Finding is not. Treat room metadata as public.
 
 use soroban_sdk::{
     contract, contracterror, contractimpl, contracttype, symbol_short, token, Address, Env, String,
@@ -494,8 +512,11 @@ impl ArisanRooms {
     /// the scheduled kocok timestamp has passed. The winner is derived
     /// DETERMINISTICALLY from the sealed seed: `winner = unwon[seed % unwon_len]`
     /// so the outcome is fixed before this tx (identical in simulation and
-    /// execution, footprint matches) and NO caller can pick the winner. The
-    /// contract transfers the pot (N × share) to the winner and advances the
+    /// execution, footprint matches). Note this makes the winner unchangeable
+    /// ONCE SEALED; it does not make the seal itself unbiasable. See the module
+    /// docs: a caller willing to burn failed-tx fees can revert `seal_kocok`
+    /// until the seed favours them. Prefunding bounds that to slot ordering, not
+    /// principal. The contract transfers the pot (N × share) to the winner and advances the
     /// round (or marks the cycle Done). The pool-of-unwon constraint still
     /// guarantees distinct winners across the cycle.
     pub fn kocok(env: Env, room_id: u32, caller: Address) -> Result<Address, Error> {

@@ -4,7 +4,10 @@
 
 Awrisan is an Indonesian rotating savings circle where a Soroban smart contract holds the pool instead of a person. The goal is simple: preserve the social and financial value of arisan while removing the single human custodian who can disappear with everyone else's money.
 
-> Status: private concept repository and Stellar testnet preview. No mainnet funds, traction, partnership, or regulatory approval is implied. Awrisan is built on Stellar and is not affiliated with the Stellar Development Foundation or Stellar Aid Assist.
+> **Rise In, Stellar Journey to Mastery, Level 4 (Green Belt) submission.**
+> See [SUBMISSION.md](SUBMISSION.md) for the requirement-to-evidence map and [DEPLOYMENTS.md](DEPLOYMENTS.md) for the live contract and on-chain transaction trail.
+
+> Status: Stellar testnet preview. No mainnet funds, traction, partnership, or regulatory approval is implied. Awrisan is built on Stellar and is not affiliated with the Stellar Development Foundation or Stellar Aid Assist.
 
 [English](#english) | [Bahasa Indonesia](#bahasa-indonesia)
 
@@ -162,7 +165,11 @@ Awrisan separates the process:
 
 The executed seed is fixed before the second transaction. Simulation and execution therefore derive the same winner and touch the same ledger entries. The seed remains public so anyone can verify the result.
 
-The current approach assumes Stellar's ledger seeded PRNG is unpredictable. An external VRF is the intended hardening step.
+**Known limitation, stated plainly.** The two phases defeat simulate-and-preview grinding, but they do not make the draw unbiasable, and unpredictability of the PRNG does not save it. `seal_kocok` returns the seed inside the same atomic transaction that writes the seal, so a member can wrap the call, compute the winner themselves, and revert the transaction whenever the winner is not them, then retry on a later ledger for a fresh seed. The cost is a few failed transaction fees.
+
+What bounds the damage is prefunding, not the PRNG. Every member is owed the same pot (N x s), so a grinder can only buy an earlier slot, never a larger payout and never anyone else's principal. Slot order still has real value in an arisan, so this is a genuine weakness we are not hiding.
+
+The intended fix is commit-reveal bonded by the prefund that already exists: each member commits H(secret) at join, reveals once per round, the seed becomes H(concat(reveals)), and a member who fails to reveal forfeits their locked share to the rest. Commit-reveal usually fails because the bond is not collectable; here every member has already locked N x s, so the prefund is the bond. An external VRF or threshold oracle is the alternative. Neither is implemented yet.
 
 ### User experience
 
