@@ -606,3 +606,110 @@ fn cannot_join_after_join_deadline() {
     assert_eq!(token.balance(&late_member), 1_000);
     assert_eq!(a.get_room(&room_id).member_count, 1);
 }
+
+// ---------------------------------------------------------------------------
+// Authorization
+//
+// Every test above runs through `fresh_env`, which calls `env.mock_all_auths()`.
+// That is deliberate for the flow tests, but it means those tests prove nothing
+// about `require_auth`: with all auths mocked, an unauthorized caller is
+// indistinguishable from an authorized one. The tests below build an env WITHOUT
+// the mock, so the only thing that can let a call through is a real signature.
+// ---------------------------------------------------------------------------
+
+/// Same as `fresh_env` but WITHOUT `mock_all_auths`, so `require_auth` bites.
+fn strict_env() -> Env {
+    let env = Env::default();
+    set_ts(&env, 1_700_000_000);
+    env
+}
+
+/// A room the host did not authorize cannot be created. Without this, the
+/// `host.require_auth()` in `create_room` is untested and anyone could open a
+/// room in someone else's name.
+#[test]
+fn create_room_requires_host_auth() {
+    let env = strict_env();
+    let admin = Address::generate(&env);
+    let host = Address::generate(&env);
+
+    let (tok, _tok_admin, _) = {
+        env.mock_all_auths();
+        let s = setup(&env, &admin);
+        (s.0, s.1, s.2)
+    };
+    let id = env.register(ArisanRooms, ());
+    let a = ArisanRoomsClient::new(&env, &id);
+    a.initialize(&tok);
+
+    // Drop every mocked auth: from here nothing is signed.
+    env.set_auths(&[]);
+
+    let now = env.ledger().timestamp();
+    let first_kocok = now + 4 * DAY;
+    let res = a.try_create_room(
+        &host,
+        &Symbol::new(&env, "AUTHA1"),
+        &SorobanString::from_str(&env, "Unauthorized"),
+        &3u32,
+        &100i128,
+        &Cadence::Weekly,
+        &first_kocok,
+        &(first_kocok - DAY),
+    );
+    assert!(
+        res.is_err(),
+        "create_room must reject a host that did not authorize the call"
+    );
+}
+
+/// A stranger cannot join a room by presenting someone else's address, even
+/// with the correct invite code. The code proves you were invited; the
+/// signature proves you are you. Both are required.
+#[test]
+fn join_room_requires_member_auth() {
+    let env = strict_env();
+    let admin = Address::generate(&env);
+    let host = Address::generate(&env);
+    let victim = Address::generate(&env);
+
+    let (tok, room_id, a) = {
+        env.mock_all_auths();
+        let (tok, tok_admin, _) = setup(&env, &admin);
+        tok_admin.mint(&host, &1_000);
+        tok_admin.mint(&victim, &1_000);
+
+        let id = env.register(ArisanRooms, ());
+        let a = ArisanRoomsClient::new(&env, &id);
+        a.initialize(&tok);
+
+        let now = env.ledger().timestamp();
+        let first_kocok = now + 4 * DAY;
+        let room_id = a.create_room(
+            &host,
+            &Symbol::new(&env, "AUTHB1"),
+            &SorobanString::from_str(&env, "Auth room"),
+            &3u32,
+            &100i128,
+            &Cadence::Weekly,
+            &first_kocok,
+            &(first_kocok - DAY),
+        );
+        (tok, room_id, a)
+    };
+
+    // Nothing is signed from here on.
+    env.set_auths(&[]);
+
+    let code = Symbol::new(&env, "AUTHB1");
+    let res = a.try_join_room(&room_id, &code, &victim);
+    assert!(
+        res.is_err(),
+        "join_room must reject an unsigned member, even with the right code"
+    );
+
+    // And the victim's money never moved.
+    let token = TokenClient::new(&env, &tok);
+    assert_eq!(token.balance(&victim), 1_000);
+    assert_eq!(a.get_room(&room_id).member_count, 1);
+}
