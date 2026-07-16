@@ -33,7 +33,7 @@ stays. The custodian risk does not.
 | The contract really holds and moves value | [DEPLOYMENTS.md](DEPLOYMENTS.md): a **complete 3-round arisan cycle** on-chain, 8 transactions, all `successful` | Verifiable |
 | The deployed bytecode matches this source | [DEPLOYMENTS.md](DEPLOYMENTS.md): CI-built WASM hashes to `a822f243...dad8a`, byte-identical to the live contract instance | Verifiable |
 | Contract source | [`contracts/arisan_rooms/src/lib.rs`](contracts/arisan_rooms/src/lib.rs) | 100% |
-| Tests | [`contracts/arisan_rooms/src/test.rs`](contracts/arisan_rooms/src/test.rs), 11 tests | Passing |
+| Tests | [`contracts/arisan_rooms/src/test.rs`](contracts/arisan_rooms/src/test.rs), 13 tests, including 2 that run **without** mocked auth | Passing |
 | CI | [`.github/workflows/soroban.yml`](.github/workflows/soroban.yml): `cargo fmt --check`, `cargo test --locked`, `stellar contract build --locked`, WASM uploaded as an artifact | Passing |
 | Frontend | `app/`: web, installable PWA, and an Android build via Capacitor | Runs locally |
 | Documentation | [README.md](README.md), bilingual (English and Bahasa Indonesia) | Complete |
@@ -80,6 +80,14 @@ Each test name maps to a property the contract guarantees.
 | `cannot_start_before_room_is_full` | No cycle begins underfunded. |
 | `wrong_code_cannot_join` | The invite code gates joining. |
 | `cannot_join_after_join_deadline` / `anyone_can_cancel_after_join_deadline` | Deadlines are enforced, and a stalled room cannot trap funds. |
+| `create_room_requires_host_auth` | **Runs without mocked auth.** A room cannot be opened in a host's name without that host's signature. |
+| `join_room_requires_member_auth` | **Runs without mocked auth.** The invite code alone is not enough: the code proves you were invited, the signature proves you are you. The victim's balance and the roster are asserted untouched. |
+
+The last two matter more than they look. Every other test runs through a harness
+that calls `env.mock_all_auths()`, which is correct for exercising the flow but
+proves nothing about authorization: with all auths mocked, an unauthorized caller
+is indistinguishable from an authorized one. These two build an env without the
+mock, so the only thing that can let the call through is a real signature.
 
 ---
 
