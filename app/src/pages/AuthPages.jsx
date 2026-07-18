@@ -9,6 +9,7 @@ import {
   UserCircle,
 } from "@phosphor-icons/react";
 import { Button, FormField, InfoStrip, Logo, TestnetPill } from "../ui.jsx";
+import { useDemo } from "../demo-state.jsx";
 
 export function SignInPage() {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ export function SignInPage() {
 
 export function OnboardingPage() {
   const navigate = useNavigate();
+  const { enterLocalSim } = useDemo();
   const [step, setStep] = useState(1);
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
@@ -80,7 +82,14 @@ export function OnboardingPage() {
     }
     setError("");
     if (step < 3) setStep((current) => current + 1);
-    else navigate("/app");
+    else {
+      // Sign-in + sandbox KYC is the "use the app" path. On the public build the
+      // chain read would otherwise land it on the read-only board (no create
+      // button, a dead end). Enter the local simulation so this flow reaches the
+      // full arisan UX -- clearly labelled a simulation everywhere it renders.
+      enterLocalSim();
+      navigate("/app");
+    }
   }
 
   const copy = {
