@@ -7,6 +7,12 @@
 An advanced Soroban contract that custodies real value on testnet, with a
 frontend, tests, and CI.
 
+**Try it now — live read-only board: <https://awrisan.vercel.app/app>.** It reads
+the deployed contract straight from the browser (a static build, no backend, no
+keys) and renders real on-chain state — the pool, each room's status, the
+winners, and a per-round seed anyone can recompute. Every figure can be checked
+against [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX).
+
 > We are **not** claiming Levels 5 to 7. Those require demonstrated user
 > traction, and Awrisan has none. See "What is NOT built" below. We would rather
 > be scored accurately at Green than be caught overclaiming at Blue.
@@ -36,7 +42,7 @@ stays. The custodian risk does not.
 | Tests | [`contracts/arisan_rooms/src/test.rs`](contracts/arisan_rooms/src/test.rs), 13 tests, including 2 that run **without** mocked auth | Passing |
 | CI | [`.github/workflows/soroban.yml`](.github/workflows/soroban.yml): `cargo fmt --check`, `cargo test --locked`, `stellar contract build --locked`, WASM uploaded as an artifact | Passing |
 | Frontend | `app/`: web, installable PWA, and an Android build via Capacitor | Runs locally |
-| Anyone can read the chain with no backend | `app/`: with no gateway, the app reads the contract from the public RPC and renders live on-chain state. Reads only — writes need a wallet and are not built. See the README. | Runs locally |
+| Anyone can read the chain with no backend | **Live at [awrisan.vercel.app](https://awrisan.vercel.app/app)** — a static build reads the contract from the public RPC and renders live on-chain state. Reads only; writes need a wallet and are not built. | Deployed |
 | Documentation | [README.md](README.md), bilingual (English and Bahasa Indonesia) | Complete |
 
 ---
@@ -123,9 +129,11 @@ be the ones who told them.
 
 - **No user traction.** Zero real users. The identities in the demo rooms are our
   own test accounts. This is why we target Green, not Blue.
-- **No public deployment yet.** There is no hosted URL. The read-only build no
-  longer *needs* a backend to be hosted — it reads the chain from the browser —
-  but we have not deployed it, so there is nothing to click.
+- **Only the read-only board is hosted.** It is live and public at
+  <https://awrisan.vercel.app>. The write path — the gateway that signs — is
+  deliberately never hosted: it holds all ten test members' secret keys (next
+  bullet). So the public URL can show real on-chain state but cannot create,
+  join, or draw.
 - **No wallet integration yet.** A local gateway holds all ten test members'
   secret keys and shells out to the Stellar CLI to sign for them. That is exactly
   why it is not hosted, and why the read-only path exists: reads need no keys at

@@ -43,13 +43,13 @@ export function LandingPage() {
             <h1>Arisan yang tidak bisa dibawa kabur.</h1>
             <p>Host tetap mengatur grup. Kontrak yang memegang dan membayar pool.</p>
             <div className="hero-actions">
-              <Button to="/masuk">Coba di testnet</Button>
+              <Button to="/app">Lihat data on-chain</Button>
               <a className="button button-outline" href="#cara-kerja">
                 <span>Lihat cara kerja</span>
                 <ArrowDown size={19} weight="bold" aria-hidden="true" />
               </a>
             </div>
-            <small>Simulasi lokal. Tidak menggunakan uang sungguhan.</small>
+            <small>Dibaca langsung dari kontrak di Stellar Testnet. Tidak ada uang sungguhan.</small>
           </motion.div>
 
           <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.72, delay: 0.08 }}>
@@ -68,7 +68,7 @@ export function LandingPage() {
                 </div>
               </div>
               <div className="preview-members"><UsersThree size={20} aria-hidden="true" /> 10 anggota siap</div>
-              <Button to="/masuk" className="preview-button">Lihat room</Button>
+              <Button to="/app" className="preview-button">Lihat room on-chain</Button>
             </div>
           </motion.div>
         </section>

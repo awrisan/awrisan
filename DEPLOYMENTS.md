@@ -148,8 +148,10 @@ Room 5's full cycle:
 
 No account needed. These are public reads — a Soroban read is a simulated
 transaction, so it needs no signature, no fee, and no account. The app's
-read-only board (see the README) makes exactly these calls from the browser,
-with no backend and no keys.
+read-only board makes exactly these calls from the browser, with no backend and
+no keys, and it is live at **<https://awrisan.vercel.app/app>** — open it and
+check the numbers below against what it shows. The `stellar` CLI calls here are
+the same reads by another route.
 
 ```bash
 # how many rooms exist

@@ -71,10 +71,17 @@ describe("Awrisan local prototype", () => {
     expect(screen.getByText(/Pilihan mencicil sebelum kocok belum tersedia/i)).toBeInTheDocument();
   });
 
-  it("opens the sandbox sign-in flow from the primary call to action", async () => {
+  it("makes the on-chain board the primary hero call to action", () => {
+    render(<App />);
+    // The strongest asset is the live chain board, so it is the primary CTA;
+    // the demo sign-in flow moved to the header "Masuk" button.
+    expect(screen.getByRole("link", { name: /Lihat data on-chain/i })).toHaveAttribute("href", "/app");
+  });
+
+  it("opens the sandbox sign-in flow from the header", async () => {
     const user = userEvent.setup();
     render(<App />);
-    await user.click(screen.getAllByRole("link", { name: /Coba di testnet/i })[0]);
+    await user.click(screen.getByRole("link", { name: /^Masuk$/i }));
     expect(screen.getByRole("heading", { name: "Selamat datang di Awrisan" })).toBeInTheDocument();
     expect(screen.getByDisplayValue("dina@awrisan.test")).toBeInTheDocument();
   });
@@ -83,7 +90,7 @@ describe("Awrisan local prototype", () => {
     const user = userEvent.setup();
     window.history.pushState({}, "", "/");
     render(<App />);
-    await user.click(screen.getAllByRole("link", { name: /Coba di testnet/i })[0]);
+    await user.click(screen.getByRole("link", { name: /^Masuk$/i }));
     await user.click(screen.getByRole("button", { name: "Lanjutkan" }));
     await screen.findByRole("heading", { name: "Kenali akun demo Anda" });
     await user.click(screen.getByRole("button", { name: "Lanjutkan" }));
