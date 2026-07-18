@@ -26,6 +26,16 @@ describe("Stellar gateway client", () => {
     expect(fetchMock).toHaveBeenCalledWith("/api/stellar/rooms", expect.objectContaining({ method: "POST" }));
   });
 
+  it("refuses to read a gateway reply out of a static host's index.html", async () => {
+    // What a host with an SPA rewrite answers on /api/*: the app itself, at 200.
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(
+      "<!doctype html><html><body><div id=\"root\"></div></body></html>",
+      { status: 200, headers: { "content-type": "text/html; charset=utf-8" } },
+    )));
+
+    await expect(getStellarStatus()).rejects.toThrow("Gateway Stellar tidak dapat dihubungi.");
+  });
+
   it("surfaces the contract wait time", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({
       error: "Kocok tersedia dalam 20 detik.",

@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { DemoProvider } from "./demo-state.jsx";
+import { DemoProvider, isChainOnly, useDemo } from "./demo-state.jsx";
+import { ChainBoard } from "./chain/ChainBoard.jsx";
 import { AppShell } from "./ui.jsx";
 import { LandingPage } from "./pages/LandingPage.jsx";
 import { OnboardingPage, SignInPage } from "./pages/AuthPages.jsx";
@@ -16,6 +17,16 @@ import {
 } from "./pages/AppPages.jsx";
 
 function ProductRoutes() {
+  const { state } = useDemo();
+  // The whole /app/* subtree switches, or none of it does. Not a branch inside
+  // HomePage: a route survives a bookmark and a reload, so leaving
+  // /app/room/stellar-5/hasil pointed at the tree below keeps every page it
+  // reaches reachable, and each of those needed its own guard to say anything
+  // true about a chain room. Zero of them are routed here instead.
+  //
+  // mode "stellar" is the gateway and falls straight through, unchanged, to the
+  // exact tree it renders today. mode "local" and "checking" likewise.
+  if (isChainOnly(state.network)) return <ChainBoard />;
   return (
     <AppShell>
       <Routes>

@@ -13,6 +13,13 @@ const identities = [
   { alias: "awrisan-dina", name: "Dina Prameswari" },
   { alias: "awrisan-rani", name: "Rani Wulandari" },
   { alias: "awrisan-sari", name: "Sari Kusuma" },
+  { alias: "awrisan-lilis", name: "Lilis Handayani" },
+  { alias: "awrisan-maya", name: "Maya Kartika" },
+  { alias: "awrisan-nia", name: "Nia Ramadhani" },
+  { alias: "awrisan-putri", name: "Putri Anindya" },
+  { alias: "awrisan-wati", name: "Wati Lestari" },
+  { alias: "awrisan-yuni", name: "Yuni Rahma" },
+  { alias: "awrisan-tika", name: "Tika Permata" },
 ];
 
 function argument(name) {

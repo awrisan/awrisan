@@ -2,6 +2,7 @@ import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowUUpLeft,
   Check,
   CirclesFour,
   Clock,
@@ -169,7 +170,16 @@ export function PhaseTracker({ active }) {
   );
 }
 
-export function TrustPanel({ amount, paidCount, memberLimit, label = "Pool terkunci" }) {
+/**
+ * `label` has no default on purpose. Which sentence is true here depends on the
+ * room's status, which this component is not given and cannot work out: "Pool
+ * terkunci" is false over a room the contract has already emptied, and "Pool
+ * terkumpul" is false over one whose members were refunded. The one caller
+ * (pages/AppPages.jsx) knows the status and picks. A default would hand the next
+ * caller whichever sentence happened to be typed here, for free, on a panel
+ * captioned with a number it did not check.
+ */
+export function TrustPanel({ amount, paidCount, memberLimit, label }) {
   return (
     <section className="trust-panel" aria-label="Status pool">
       <div className="trust-panel-main">
@@ -187,24 +197,53 @@ export function TrustPanel({ amount, paidCount, memberLimit, label = "Pool terku
   );
 }
 
+/**
+ * The app's entire status vocabulary. Exported because stellar-rpc's STATUS_MAP
+ * has to land inside it, and that file does not import this one: a status
+ * missing here renders as a bare word over an action panel with no branch for
+ * it. Neither file can check the other, so stellar-rpc.test.js:158 imports both
+ * and holds them together.
+ *
+ * `dissolved` has no local counterpart: only the contract can dissolve a room.
+ * Both paths out pay every member the contract still owes and leave it holding
+ * nothing (cancel_room lib.rs:437-439, emergency_dissolve :708-717), so there is
+ * nothing left to act on. Which members were owed is not the same question, and
+ * the two paths answer it differently — the room detail asks it there.
+ */
+export const STATUS_LABELS = {
+  ready: "Dana lengkap",
+  funding: "Menunggu setoran",
+  sealed: "Room terkunci",
+  paid: "Siklus selesai",
+  dissolved: "Room dibubarkan",
+};
+
+/**
+ * The statuses whose rooms the contract is still holding money for. An allowlist
+ * rather than the `!== "funding"` it replaces: that denylist counted `paid`,
+ * where kocok has already paid the last pot out, and would count `dissolved`,
+ * where the refunds emptied the room. Both hold exactly nothing. The home screen
+ * captions this sum "terkunci di Stellar Testnet", so a status guessed into this
+ * set turns that caption into a sentence that is no longer true.
+ *
+ * `ready` has no on-chain counterpart: it is a gateway room, prefunded and
+ * waiting to be started, which is `Open` as far as the contract is concerned.
+ */
+export const HOLDS_FUNDS = new Set(["ready", "funding", "sealed"]);
+
 export function StatusBadge({ status }) {
-  const labels = {
-    ready: "Siap dikocok",
-    funding: "Menunggu setoran",
-    sealed: "Room terkunci",
-    paid: "Sudah dibayar",
-  };
   const icons = {
     ready: Check,
     funding: Clock,
     sealed: LockKey,
     paid: Receipt,
+    dissolved: ArrowUUpLeft,
   };
   const Icon = icons[status] || CirclesFour;
   return (
     <span className={`status-badge status-${status}`}>
       <Icon size={16} weight="regular" aria-hidden="true" />
-      {labels[status] || status}
+      {STATUS_LABELS[status] || status}
     </span>
   );
 }

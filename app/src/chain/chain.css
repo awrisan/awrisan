@@ -1,0 +1,556 @@
+/* The chain board's own surface.
+ *
+ * Scoped to .chain-*: this view renders outside AppShell (it replaces the whole
+ * /app subtree in read-only mode), so it cannot lean on .app-layout, and it must
+ * not reach into the classes the gateway path renders through. Tokens are the
+ * app's own (`--mineral` in styles.css) so the two surfaces read as one product:
+ * mineral paper, forest ink, Manrope, the same radii and the same lift on hover.
+ *
+ * Citations here name a token or a selector, never a line: styles.css is 4007
+ * lines and under edit, so a line number in this file is a pointer with a
+ * shelf-life. chainboard-citations.test.js greps every one of them. */
+
+.chain-page {
+  min-height: 100vh;
+  background: var(--mineral);
+}
+
+/* The proof band. Dark on purpose: everything a reader needs to check this page
+   against the chain themselves — contract id, explorer, ledger height — sits in
+   one block, above the first room, and reads as the page's masthead rather than
+   as a notice someone might have added. */
+.chain-header {
+  padding: 34px 0 74px;
+  background-color: var(--forest-dark);
+  background-image: radial-gradient(115% 130% at 8% -10%, rgba(255, 255, 255, 0.1), transparent 58%);
+  color: #fff;
+}
+
+.chain-header > * {
+  width: min(100% - 44px, 940px);
+  margin-inline: auto;
+}
+
+.chain-header-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.chain-lead,
+.chain-reading {
+  margin: 0 0 20px;
+  max-width: 26ch;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  font-weight: 760;
+  letter-spacing: -0.045em;
+  line-height: 1.24;
+}
+
+/* No result is known yet, so the pulse says the page is working rather than
+   broken. It is no longer the only thing on the band for those ~4 seconds — the
+   contract id renders under it from the first frame, because a build-time
+   constant is not a read result and never needed the wait. */
+.chain-reading {
+  color: rgba(255, 255, 255, 0.82);
+  animation: chain-reading-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes chain-reading-pulse {
+  50% { opacity: 0.55; }
+}
+
+.chain-contract {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 7px 14px;
+  margin: 0 0 9px;
+}
+
+.chain-contract > span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chain-contract code,
+.chain-address,
+.chain-seed,
+.chain-verify-match {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+
+.chain-contract code {
+  color: #cfe6d8;
+  font-size: 0.79rem;
+  letter-spacing: 0.01em;
+  word-break: break-all;
+}
+
+.chain-contract a {
+  color: #fff;
+  font-size: 0.79rem;
+  font-weight: 720;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: border-color 160ms ease;
+}
+
+.chain-contract a:hover {
+  border-bottom-color: #fff;
+}
+
+.chain-ledger {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.76rem;
+}
+
+.chain-body {
+  width: min(100% - 44px, 940px);
+  margin: 0 auto;
+  padding-bottom: 88px;
+}
+
+/* Lifted over the band's edge: the total is the one figure on this page that is
+   about the contract rather than about a room, so it sits across the seam
+   between the two. */
+.chain-total {
+  margin: -42px 0 34px;
+  padding: 25px 27px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+}
+
+/* A whole sentence at display size, not a number under a label. The label is
+   where the lies lived: a figure this big with "terkunci" over it made a claim
+   the sum could not carry. Here the claim IS the type. */
+.chain-total-line {
+  margin: 0 0 11px;
+  font-size: clamp(1.12rem, 2.1vw, 1.55rem);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1.34;
+}
+
+.chain-total-note {
+  margin: 0;
+  max-width: 76ch;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.58;
+}
+
+.chain-total-note + .chain-total-note {
+  margin-top: 6px;
+}
+
+/* The two states with no figure to show. Same panel, quieter type: an absent
+   number should not read as a headline. */
+.chain-total-quiet {
+  max-width: 76ch;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #40483f;
+}
+
+.chain-cards {
+  display: grid;
+  gap: 15px;
+}
+
+.chain-card {
+  position: relative;
+  overflow: hidden;
+  padding: 21px 24px 20px 27px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.chain-card:hover {
+  transform: translateY(-2px);
+  border-color: #b9c8b7;
+  box-shadow: 0 14px 32px rgba(28, 43, 36, 0.07);
+}
+
+/* The rail carries the state as colour so the cards can be scanned, and carries
+   no words so it cannot say anything the sentences do not. */
+.chain-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--line);
+}
+
+.chain-card-active-due::before,
+.chain-card-active-scheduled::before,
+.chain-card-active-unknown-schedule::before {
+  background: var(--forest);
+}
+
+.chain-card-open-full::before,
+.chain-card-open-live::before {
+  background: #d9a83e;
+}
+
+/* Stuck, not lost: a room past its deadline still holds every member's money. */
+.chain-card-open-dead::before,
+.chain-card-unknown::before {
+  background: var(--warning);
+}
+
+.chain-card-done::before {
+  background: #8fa694;
+}
+
+.chain-card-dissolved-cancelled::before,
+.chain-card-dissolved-emergency::before {
+  background: #a8ad9f;
+}
+
+.chain-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-bottom: 13px;
+}
+
+.chain-card-id {
+  margin: 0 0 4px;
+  color: var(--forest);
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chain-card h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.038em;
+}
+
+.chain-card-chip {
+  margin: 0;
+  padding: 7px 11px;
+  border-radius: 9px;
+  background: var(--forest-soft);
+  color: var(--forest);
+  font-size: 0.71rem;
+  font-weight: 720;
+  line-height: 1.35;
+}
+
+/* Green reads as "on track" and a dissolved room is over. Not danger either:
+   nobody lost anything. Same reasoning as `.status-dissolved` in styles.css. */
+.chain-card-dissolved-cancelled .chain-card-chip,
+.chain-card-dissolved-emergency .chain-card-chip {
+  background: var(--warm);
+  color: var(--muted);
+}
+
+.chain-card-body {
+  margin: 0;
+  max-width: 72ch;
+  color: #2b322d;
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+
+.chain-card-note {
+  margin: 11px 0 0;
+  max-width: 72ch;
+  color: var(--muted);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+
+.chain-card-pot {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.chain-more {
+  margin-top: 17px;
+  border-top: 1px solid var(--line);
+}
+
+.chain-more summary {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--forest);
+  font-size: 0.81rem;
+  font-weight: 720;
+  cursor: pointer;
+  list-style: none;
+}
+
+.chain-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.chain-more summary:hover {
+  color: var(--forest-dark);
+}
+
+.chain-more summary:focus-visible {
+  outline: 3px solid rgba(0, 78, 61, 0.24);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.chain-more summary > svg {
+  flex: 0 0 auto;
+  transition: transform 180ms ease;
+}
+
+.chain-more[open] summary > svg {
+  transform: rotate(180deg);
+}
+
+.chain-more-content {
+  padding-bottom: 4px;
+}
+
+.chain-block + .chain-block {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+}
+
+.chain-block-lead {
+  margin: 0 0 13px;
+  max-width: 76ch;
+  color: var(--muted);
+  font-size: 0.77rem;
+  line-height: 1.6;
+}
+
+.chain-members,
+.chain-rounds {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.chain-members li {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--mineral);
+}
+
+.chain-avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e5e6e1;
+  color: var(--forest);
+  font-size: 0.7rem;
+  font-weight: 740;
+}
+
+.chain-address {
+  display: inline-block;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-bottom: 1px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.chain-address:hover {
+  color: var(--forest);
+  border-bottom-color: currentColor;
+}
+
+.chain-member-stake,
+.chain-member-math {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.chain-member-stake {
+  color: #4f5a54;
+}
+
+.chain-member-math {
+  color: var(--muted);
+}
+
+.chain-won {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: var(--forest);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 720;
+  white-space: nowrap;
+}
+
+.chain-rounds li {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--forest);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+.chain-round-head {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 740;
+  letter-spacing: -0.015em;
+}
+
+.chain-seed {
+  margin: 7px 0 0;
+  color: #4f5a54;
+  font-size: 0.71rem;
+  word-break: break-all;
+}
+
+.chain-verify {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+/* The one line on this page that is arithmetic rather than prose, and the only
+   one set as such. */
+.chain-verify-match {
+  background: var(--forest-soft);
+  color: var(--forest);
+  font-size: 0.7rem;
+}
+
+.chain-verify-mismatch {
+  background: #f9eae7;
+  color: var(--danger);
+  font-weight: 640;
+}
+
+.chain-verify-no-seed,
+.chain-verify-skipped {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+/* The limitation the contract documents about itself (lib.rs:23-38 — a line
+   citation on purpose, and the only one left here: that file is frozen, and the
+   rest of this view points into it the same way dozens of times, so converting
+   one of them buys nothing and costs consistency), in the colour the landing page
+   already gives its tradeoffs (`.tradeoff-disclosure` in styles.css) — same
+   voice, same weight, not an afterthought and not an alarm. */
+.chain-disclosure {
+  margin-top: 15px;
+  padding: 15px 17px;
+  border: 1px solid #e6d7b4;
+  border-radius: var(--radius-sm);
+  background: var(--warning-soft);
+}
+
+.chain-disclosure h3 {
+  margin: 0 0 9px;
+  color: #4d3509;
+  font-size: 0.85rem;
+  letter-spacing: -0.02em;
+}
+
+/* Reads at .chain-card-note's size, not below it. This block was the smallest
+   type on the card, which is where a disclosure goes to be ignored — and it is
+   the one thing here the contract's own docs oblige the UI to say. */
+.chain-disclosure p {
+  margin: 0;
+  max-width: 78ch;
+  color: #64583f;
+  font-size: 0.83rem;
+  line-height: 1.62;
+}
+
+/* The label each sentence already carries. "Terbukti:" and "Belum terbukti:" are
+   the split, and set as running prose they were a wall the eye slides off. Same
+   ink as the h3 above: this is the block's own outline, not an alarm inside it. */
+.chain-disclosure strong {
+  color: #4d3509;
+  font-weight: 760;
+}
+
+.chain-disclosure p + p {
+  margin-top: 9px;
+}
+
+@media (max-width: 560px) {
+  .chain-header {
+    padding: 24px 0 66px;
+  }
+
+  .chain-header > *,
+  .chain-body {
+    width: min(100% - 32px, 940px);
+  }
+
+  .chain-card {
+    padding: 18px 16px 17px 19px;
+  }
+
+  .chain-total {
+    padding: 20px 18px;
+  }
+
+  .chain-members li {
+    grid-template-columns: 30px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .chain-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .chain-won {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chain-reading {
+    animation: none;
+  }
+
+  .chain-card:hover {
+    transform: none;
+  }
+}

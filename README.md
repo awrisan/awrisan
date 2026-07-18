@@ -13,9 +13,25 @@ Awrisan is an Indonesian rotating savings circle where a Soroban smart contract 
 
 ## Local demo | Demo lokal
 
-**English:** A working culture-first web and installable PWA lives in `app/`. It covers the landing page, sign-in, onboarding, dashboard, room creation, prefunding status, contract activation, two-transaction draw, winner result, activity, profile, and receipt. When the local gateway has a Testnet deployment, room creation, activation, draw, and payout are real Soroban transactions using native Testnet XLM. Without that configuration, the interface clearly falls back to local simulation. No real money moves.
+**English:** A working culture-first web and installable PWA lives in `app/`. It covers the landing page, sign-in, onboarding, dashboard, room creation, prefunding status, contract activation, two-transaction draw, winner result, activity, profile, and receipt.
 
-**Bahasa Indonesia:** Web culture-first dan PWA yang dapat dipasang berada di `app/`. Alurnya mencakup landing page, masuk, onboarding, dashboard, pembuatan room, status prefund, aktivasi kontrak, kocok dua transaksi, hasil pemenang, aktivitas, profil, dan tanda terima. Saat gateway lokal sudah memiliki deployment Testnet, pembuatan room, aktivasi, kocok, dan payout adalah transaksi Soroban nyata memakai XLM Testnet. Tanpa konfigurasi tersebut, antarmuka menyatakan dengan jelas bahwa aplikasi kembali ke simulasi lokal. Tidak ada uang sungguhan yang berpindah.
+The app has three modes, picked by what it can reach:
+
+1. **Gateway** — with a local gateway holding a Testnet deployment *and* signing identities, room creation, activation, draw, and payout are real Soroban transactions using native Testnet XLM.
+2. **Read-only** — with no gateway, the app reads the contract straight from the public Soroban RPC and shows real on-chain state. It cannot write. See [Read-only mode](#read-only-mode--mode-baca-saja).
+3. **Local simulation** — the last resort, used only when the RPC cannot be reached either.
+
+Testnet throughout. No real money moves.
+
+**Bahasa Indonesia:** Web culture-first dan PWA yang dapat dipasang berada di `app/`. Alurnya mencakup landing page, masuk, onboarding, dashboard, pembuatan room, status prefund, aktivasi kontrak, kocok dua transaksi, hasil pemenang, aktivitas, profil, dan tanda terima.
+
+Aplikasinya punya tiga mode, ditentukan oleh apa yang bisa dihubungi:
+
+1. **Gateway** — saat gateway lokal punya deployment Testnet *dan* identitas penanda tangan, pembuatan room, aktivasi, kocok, dan payout adalah transaksi Soroban nyata memakai XLM Testnet.
+2. **Baca saja** — tanpa gateway, aplikasi membaca kontrak langsung dari RPC Soroban publik dan menampilkan keadaan on-chain yang sebenarnya. Aplikasi tidak bisa menulis apa pun.
+3. **Simulasi lokal** — pilihan terakhir, hanya dipakai kalau RPC pun tidak bisa dihubungi.
+
+Semuanya Testnet. Tidak ada uang sungguhan yang berpindah.
 
 ### Run the web and PWA | Jalankan web dan PWA
 
@@ -27,6 +43,52 @@ npm run preview
 ```
 
 Open `http://127.0.0.1:4173/`. The production build includes a web app manifest and service worker. The Android Capacitor wrapper remains in `app/android/` and can be refreshed with `npm run android:sync`.
+
+`npm run preview` starts the local gateway, which serves `dist/` and reports the
+committed deployment metadata in `.stellar/awrisan-runtime.json`. It signs only
+if you have also run `stellar:bootstrap` to create the identities; a fresh clone
+has the deployment but not the keys, so writes will fail until you do.
+
+### Read-only mode | Mode baca saja
+
+**English:** With no gateway in front of it, the app talks to the public Soroban
+RPC itself and renders what the contract actually says: the contract id, the
+ledger height it read at, what the contract holds, and each room's status,
+members, rounds, and winners. Every figure on that screen is a live read.
+
+To see it, use either path — neither serves `/api`, so the app goes straight to
+the chain:
+
+```powershell
+cd app
+npm run dev                  # or: npm run build, then serve app/dist/ with any static file server
+```
+
+**It is read-only, and that is a boundary, not a setting.** A Soroban read is a
+simulated transaction: no signature, no submission, no fee, no account — which is
+why a browser can do it alone, and why a static bundle with no backend can show
+real on-chain state. A *write* needs a signature. Per-member signing (Freighter
+or passkey) is not built, so nothing on that screen can be created, joined,
+started, sealed, or drawn.
+
+**Why it exists.** The gateway signs by holding all ten test members' secret keys
+and shelling out to the Stellar CLI. Hosting that would put ten people's keys on
+one server, for a project whose entire thesis is that nobody should hold
+everyone's money. Reads need none of it, so the read-only build is the part that
+can be published: static, no backend, no keys, nothing to steal.
+
+**Bahasa Indonesia:** Tanpa gateway, aplikasi menghubungi RPC Soroban publik
+sendiri dan menampilkan apa yang benar-benar dikatakan kontrak: contract id,
+ledger saat dibaca, dana yang dipegang kontrak, serta status, anggota, putaran,
+dan pemenang tiap room. Semua angka di layar itu hasil baca langsung.
+
+Mode ini **hanya bisa membaca**, dan itu batas teknis, bukan pengaturan. Membaca
+Soroban berarti mensimulasikan transaksi: tanpa tanda tangan, tanpa pengiriman,
+tanpa biaya, tanpa akun. Menulis butuh tanda tangan, dan penandatanganan per
+anggota (Freighter atau passkey) belum dibuat. Alasannya: gateway menyimpan
+secret key sepuluh anggota uji dan memanggil Stellar CLI, jadi menghostingnya
+berarti menaruh kunci sepuluh orang di satu server — persis yang ditolak tesis
+proyek ini. Membaca tidak butuh semua itu.
 
 ### Connect a Testnet deployment | Hubungkan deployment Testnet
 
@@ -44,9 +106,9 @@ npm run build
 npm run preview
 ```
 
-The bootstrap command creates and funds three local sandbox identities using Friendbot. Their signing material and all local room runtime data remain under `.stellar/`, which Git ignores. The browser and PWA never receive a secret key. They call the same-origin localhost gateway, which signs Testnet transactions server-side.
+The bootstrap command creates and funds a local sandbox identity for each demo member using Friendbot — the committed runtime (`.stellar/awrisan-runtime.json`) carries ten of them. Their signing material stays in `.stellar/identity/`, which Git ignores: no secret key is committed anywhere in this repository. Two files under `.stellar/` *are* committed on purpose — `awrisan-runtime.json` and `rooms.json` — and they carry the contract id, the token id, and public addresses, nothing else. The browser and PWA never receive a secret key. They call the same-origin localhost gateway, which signs Testnet transactions server-side.
 
-Workflow `Soroban contract` memformat, mengetes, dan membangun `contracts/arisan_rooms`. Jalankan workflow secara manual dengan `deploy_testnet` aktif, unduh `deployment.json`, lalu gunakan perintah di atas. Bootstrap membuat tiga identitas sandbox lokal memakai Friendbot. Materi penandatanganan dan data runtime hanya berada di `.stellar/` yang diabaikan Git. Browser dan PWA tidak pernah menerima secret key.
+Workflow `Soroban contract` memformat, mengetes, dan membangun `contracts/arisan_rooms`. Jalankan workflow secara manual dengan `deploy_testnet` aktif, unduh `deployment.json`, lalu gunakan perintah di atas. Bootstrap membuat identitas sandbox lokal untuk tiap anggota demo memakai Friendbot; runtime yang ter-commit berisi sepuluh identitas. Materi penandatanganan berada di `.stellar/identity/` yang diabaikan Git; tidak ada satu pun secret key yang ikut ter-commit. Browser dan PWA tidak pernah menerima secret key.
 
 The interface displays IDR to explain the business rules, while the current on-chain demo locks a small fixed amount of Testnet XLM. This is not a rupiah stablecoin, fiat custody system, or mainnet deployment.
 
@@ -334,7 +396,11 @@ Awrisan memisahkan prosesnya:
 
 Seed hasil eksekusi sudah tetap sebelum transaksi kedua. Simulasi dan eksekusi memilih pemenang yang sama dan menyentuh entri ledger yang sama. Seed tetap publik agar hasilnya dapat diverifikasi siapa pun.
 
-Pendekatan saat ini mengasumsikan PRNG berbasis ledger Stellar tidak dapat diprediksi. VRF eksternal adalah langkah penguatan yang direncanakan.
+**Batasan yang kami sebut terus terang.** Dua fase itu mematikan grinding lewat simulasi, tetapi tidak membuat kocok bebas dari bias, dan ketidakterdugaan PRNG tidak menyelamatkannya. `seal_kocok` mengembalikan seed di dalam transaksi atomik yang sama saat menulis seal, sehingga seorang anggota bisa membungkus pemanggilannya, menghitung sendiri pemenangnya, lalu membatalkan transaksi itu setiap kali pemenangnya bukan dia, dan mencoba lagi pada ledger berikutnya untuk seed baru. Ongkosnya hanya beberapa biaya transaksi gagal.
+
+Yang membatasi kerugian adalah prefunding, bukan PRNG-nya. Setiap anggota berhak atas pot yang sama besar (N x s), jadi pelaku hanya bisa membeli giliran yang lebih awal — tidak pernah payout yang lebih besar, dan tidak pernah pokok dana anggota lain. Urutan giliran tetap bernilai nyata dalam arisan, jadi ini kelemahan sungguhan yang tidak kami sembunyikan.
+
+Perbaikan yang dituju adalah commit-reveal yang dijamin oleh prefund yang sudah ada: setiap anggota menyerahkan H(rahasia) saat gabung, membukanya sekali tiap putaran, seed menjadi H(gabungan semua reveal), dan anggota yang tidak membuka kehilangan setoran terkuncinya untuk anggota lain. Commit-reveal biasanya gagal karena jaminannya tidak bisa ditagih; di sini setiap anggota sudah mengunci N x s, jadi prefund itulah jaminannya. VRF eksternal atau oracle threshold adalah alternatifnya. Keduanya belum diterapkan.
 
 ### Pengalaman pengguna
 

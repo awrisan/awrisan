@@ -29,13 +29,14 @@ stays. The custodian risk does not.
 
 | What a reviewer should check | Where | Status |
 |---|---|---|
-| Advanced Soroban contract, deployed | [`CDTNEK4E...G3EA`](https://stellar.expert/explorer/testnet/contract/CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX) on testnet | Live |
+| Advanced Soroban contract, deployed | [`CDTNEK4E...CIDX`](https://stellar.expert/explorer/testnet/contract/CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L4CIDX) on testnet | Live |
 | The contract really holds and moves value | [DEPLOYMENTS.md](DEPLOYMENTS.md): a **complete 3-round arisan cycle** on-chain, 8 transactions, all `successful` | Verifiable |
-| The deployed bytecode matches this source | [DEPLOYMENTS.md](DEPLOYMENTS.md): CI-built WASM hashes to `a822f243...dad8a`, byte-identical to the live contract instance | Verifiable |
+| The deployed bytecode is accounted for | [DEPLOYMENTS.md](DEPLOYMENTS.md): the live instance hashes to `a822f243...dad8a`, built by CI from commit `15246f05`. Since then the contract source changed in **doc comments only**, which Soroban embeds in the contract spec — so `HEAD` builds to a different hash with identical logic. We say so rather than let the hash pass for the wrong reason. | Verifiable, with a caveat we state |
 | Contract source | [`contracts/arisan_rooms/src/lib.rs`](contracts/arisan_rooms/src/lib.rs) | 100% |
 | Tests | [`contracts/arisan_rooms/src/test.rs`](contracts/arisan_rooms/src/test.rs), 13 tests, including 2 that run **without** mocked auth | Passing |
 | CI | [`.github/workflows/soroban.yml`](.github/workflows/soroban.yml): `cargo fmt --check`, `cargo test --locked`, `stellar contract build --locked`, WASM uploaded as an artifact | Passing |
 | Frontend | `app/`: web, installable PWA, and an Android build via Capacitor | Runs locally |
+| Anyone can read the chain with no backend | `app/`: with no gateway, the app reads the contract from the public RPC and renders live on-chain state. Reads only — writes need a wallet and are not built. See the README. | Runs locally |
 | Documentation | [README.md](README.md), bilingual (English and Bahasa Indonesia) | Complete |
 
 ---
@@ -54,9 +55,12 @@ stellar contract invoke --id CDTNEK4EXYCEZY6XF5MZHQ7C7GBOYYVYR4MBS6D32LPP5OG2L2L
 # 3. the tests pass
 cargo test --locked -p arisan-rooms
 
-# 4. the source you just read compiles to the bytecode that is running
+# 4. the bytecode running on testnet, and which commit it came from
 gh run download 29420588469 -n arisan-rooms-wasm && sha256sum arisan_rooms.wasm
-# expect a822f2430d8612d9f11ce1701784e547a49fa78d8015904fc9b26125013dad8a
+# That run built commit 15246f05. The live instance reports
+# a822f2430d8612d9f11ce1701784e547a49fa78d8015904fc9b26125013dad8a — compare.
+# It is NOT a build of HEAD: the diff since is doc comments only, and Soroban
+# puts those in the contract spec. DEPLOYMENTS.md walks the whole check.
 ```
 
 Or click any transaction in [DEPLOYMENTS.md](DEPLOYMENTS.md) and read it on
@@ -119,10 +123,18 @@ be the ones who told them.
 
 - **No user traction.** Zero real users. The identities in the demo rooms are our
   own test accounts. This is why we target Green, not Blue.
-- **No public deployment yet.** The frontend runs locally. There is no hosted URL.
-- **No wallet integration yet.** A local gateway holds the test members' keys and
-  signs on their behalf. Real per-member signing (Freighter or passkey) is the
-  next milestone, and it is the prerequisite for any traction claim later.
+- **No public deployment yet.** There is no hosted URL. The read-only build no
+  longer *needs* a backend to be hosted — it reads the chain from the browser —
+  but we have not deployed it, so there is nothing to click.
+- **No wallet integration yet.** A local gateway holds all ten test members'
+  secret keys and shells out to the Stellar CLI to sign for them. That is exactly
+  why it is not hosted, and why the read-only path exists: reads need no keys at
+  all. Real per-member signing (Freighter or passkey) is the next milestone, and
+  it is the prerequisite for any traction claim later.
+- **The deployed bytecode is one commit behind the source.** Doc comments only,
+  but Soroban embeds them in the contract spec, so `HEAD` does not build to the
+  deployed hash. Redeploying is the fix. Detailed in DEPLOYMENTS.md rather than
+  left for a reviewer to trip over.
 - **The draw is biasable.** A member willing to burn failed-transaction fees can
   revert `seal_kocok` until the seed favours them. Prefunding bounds this to slot
   ordering, never to principal, and never to anyone else's money. The intended
@@ -137,8 +149,12 @@ be the ones who told them.
 
 ```bash
 cargo test --locked -p arisan-rooms       # contract tests
-cd app && npm install && npm run dev      # web and PWA
+cd app && npm install && npm run dev      # web and PWA, reading the live contract
 ```
 
-See the README for the full flow, including how the app falls back to local
-simulation when no testnet gateway is configured.
+With no gateway configured, `npm run dev` puts the app in read-only mode: it
+reads the deployed contract straight from the public Soroban RPC and shows real
+on-chain state, with no backend and no keys. It cannot write — that needs a
+wallet, and per-member signing is not built. See the README for all three modes
+(gateway, read-only, and local simulation) and for what each one can and cannot
+do.
