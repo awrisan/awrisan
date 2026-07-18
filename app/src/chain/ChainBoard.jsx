@@ -4,6 +4,7 @@ import { CONTRACT_ID } from "../stellar-rpc.js";
 import { Logo, TestnetPill } from "../ui.jsx";
 import { ChainRoomCard } from "./ChainRoomCard.jsx";
 import {
+  BOARD_BOUNDARY,
   BOARD_LEAD,
   CONTRACT_LABEL,
   EXPLORER_LINK,
@@ -80,6 +81,10 @@ export function ChainBoard() {
             says the read is in flight, and claims no result — no rooms, no total,
             no zero, no ledger. */}
         <h1 className={reading ? "chain-reading" : "chain-lead"}>{reading ? READING : BOARD_LEAD}</h1>
+        {/* The write boundary, said out loud. Without it the missing create
+            button reads as breakage — the founder himself filed it as a bug.
+            True in every mode, so it does not wait for the read. */}
+        <p className="chain-boundary">{BOARD_BOUNDARY}</p>
         {/* Rendered while reading too, and it is the only thing here that is.
             `CONTRACT_ID` in stellar-rpc.js is a build-time constant, not a read
             result: it is exactly as true in the first frame as in the last, so

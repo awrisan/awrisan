@@ -225,6 +225,18 @@ export const READING = "Membaca kontrak…";
  */
 export const BOARD_LEAD = "Dibaca langsung dari smart contract di Stellar Testnet. Tanpa perantara, tanpa wallet, tanpa kunci.";
 
+/**
+ * The write boundary, stated on the board instead of left for the visitor to
+ * discover. A write is a SIGNED transaction (lib.rs:192, create_room's
+ * host.require_auth; join and kocok likewise), and this build carries no signer: the
+ * gateway that signs holds ten members' secret keys and is deliberately never
+ * hosted — putting everyone's keys on one server is the exact thing the product
+ * argues against (README, "Read-only mode"). The board's own founder read this
+ * page without this sentence and filed "cannot create a room" as a bug, which
+ * proves the silence read as breakage, not as a boundary.
+ */
+export const BOARD_BOUNDARY = "Halaman ini hanya membaca. Membuat room dan kocok butuh tanda tangan wallet — belum tersedia di web publik. Demo tulis berjalan lokal lewat gateway (lihat README).";
+
 /** `CONTRACT_ID` in stellar-rpc.js. Public: lib.rs:40-45 says treat room metadata as public. */
 export const CONTRACT_LABEL = "Contract";
 export const EXPLORER_LINK = "Periksa di Stellar Expert";

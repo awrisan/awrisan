@@ -62,6 +62,15 @@
   50% { opacity: 0.55; }
 }
 
+/* The write boundary under the lead: quiet, but present in every mode. */
+.chain-boundary {
+  margin: -8px 0 22px;
+  max-width: 64ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .chain-contract {
   display: flex;
   flex-wrap: wrap;
