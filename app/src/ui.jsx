@@ -96,10 +96,13 @@ export function AppShell({ children }) {
               </NavLink>
             ))}
           </nav>
-          <Link className="sidebar-exit" to="/">
+          {/* Full navigation on purpose: leaving the simulation needs a fresh
+              load so connect() re-reads the chain, otherwise the mode stays
+              "local" and every "on-chain" link loops back into the demo. */}
+          <a className="sidebar-exit" href="/">
             <SignOut size={21} aria-hidden="true" />
             Keluar dari demo
-          </Link>
+          </a>
         </aside>
         <main className={`app-main${hideNavigation ? " app-main-focused" : ""}`}>{children}</main>
       </div>

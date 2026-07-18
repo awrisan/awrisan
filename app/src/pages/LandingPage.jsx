@@ -43,7 +43,11 @@ export function LandingPage() {
             <h1>Arisan yang tidak bisa dibawa kabur.</h1>
             <p>Host tetap mengatur grup. Kontrak yang memegang dan membayar pool.</p>
             <div className="hero-actions">
-              <Button to="/app">Lihat data on-chain</Button>
+              {/* A full navigation, not a client-side link: reaching the chain
+                  board needs connect() to re-read the chain, which only happens
+                  on a fresh load. A React Router link would keep a "local"
+                  session in the simulation and never show the board. */}
+              <a className="button button-primary" href="/app">Lihat data on-chain</a>
               <a className="button button-outline" href="#cara-kerja">
                 <span>Lihat cara kerja</span>
                 <ArrowDown size={19} weight="bold" aria-hidden="true" />

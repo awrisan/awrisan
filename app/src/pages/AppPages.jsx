@@ -225,10 +225,27 @@ export function HomePage() {
           : state.network.message}
       </InlineNotice>
 
-      <section className="safe-balance">
-        <span><LockKey size={30} weight="regular" aria-hidden="true" /></span>
-        <div><p>Nilai room on-chain</p><strong>{lockedLabel}</strong><small>{lockedCaption({ holding: holdingRooms.length, hasChainRooms: state.rooms.some((room) => room.source === "stellar"), mode: state.network.mode })}</small></div>
-      </section>
+      {/* On mobile the desktop sidebar — and its only "Keluar dari demo" — is
+          hidden, so the simulation had no way back to the chain board. This is
+          the escape hatch. A full navigation (href, not <Link>) so connect()
+          re-reads the chain; a client-side link would keep mode "local" and
+          loop straight back into the simulation. */}
+      {state.network.mode === "local" && (
+        <a className="sim-exit-inline" href="/app">
+          <LockKey size={19} weight="regular" aria-hidden="true" />
+          Lihat data on-chain
+        </a>
+      )}
+
+      {/* An on-chain balance card is meaningless in the local simulation, where
+          nothing is on the chain. In that mode it only rendered a confusing
+          "Nilai room on-chain: kontrak tidak dapat dihubungi", so hide it. */}
+      {state.network.mode !== "local" && (
+        <section className="safe-balance">
+          <span><LockKey size={30} weight="regular" aria-hidden="true" /></span>
+          <div><p>Nilai room on-chain</p><strong>{lockedLabel}</strong><small>{lockedCaption({ holding: holdingRooms.length, hasChainRooms: state.rooms.some((room) => room.source === "stellar"), mode: state.network.mode })}</small></div>
+        </section>
+      )}
 
       <div className="section-heading-row">
         <div><p className="eyebrow">Lingkaran aktif</p><h2>Arisan saya</h2></div>
