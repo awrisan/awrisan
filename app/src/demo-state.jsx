@@ -472,6 +472,27 @@ export function DemoProvider({ children }) {
           ),
         }));
       },
+      // The public read-only board has no signer, so it cannot create a room.
+      // This drops the app into its existing local-simulation mode -- the
+      // original prototype -- where create, join, and kocok all run client-side
+      // and every screen already labels itself "simulasi lokal". It demonstrates
+      // the flow; it is not a chain write and never claims to be one. A reload
+      // re-runs connect() and returns to the chain board.
+      enterLocalSim() {
+        setState((current) => ({
+          ...current,
+          network: {
+            connected: false,
+            mode: "local",
+            network: "testnet",
+            message: "Mode simulasi lokal. Semua aksi disimpan di perangkat ini, tanpa transaksi blockchain.",
+          },
+          // A clean sandbox: the seeded demo rooms only. The chain rooms are the
+          // contract's, and a simulation must not wear their on-chain badge;
+          // they come back on the next reload, when the read re-runs.
+          rooms: initialDemoState.rooms.map((room) => ({ source: "local", ...room })),
+        }));
+      },
     }),
     [state],
   );

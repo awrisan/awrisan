@@ -563,3 +563,33 @@
     transform: none;
   }
 }
+
+/* The "coba buat room (simulasi)" invitation, on the light board body. */
+.chain-sim {
+  margin: 10px 4px 6px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.chain-sim-button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: var(--forest);
+  color: var(--paper);
+  font-size: 1.02rem;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+  transition: transform 120ms ease, background 120ms ease;
+}
+.chain-sim-button:hover { background: var(--forest-dark); transform: translateY(-1px); }
+.chain-sim-button:active { transform: translateY(0); }
+.chain-sim-note {
+  margin: 12px auto 0;
+  max-width: 48ch;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(24, 29, 27, 0.64);
+}

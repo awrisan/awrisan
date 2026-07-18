@@ -9,6 +9,8 @@ import {
   CONTRACT_LABEL,
   EXPLORER_LINK,
   READING,
+  SIM_CTA,
+  SIM_NOTE,
   TOTAL_CAPTION,
   TOTAL_UNKNOWN,
   allUnread,
@@ -57,7 +59,7 @@ import "./chain.css";
  * the moment one stops resolving.
  */
 export function ChainBoard() {
-  const { state } = useDemo();
+  const { state, enterLocalSim } = useDemo();
   const nowSeconds = useNowSeconds();
   // The chain read's rooms and nothing else. `mergeStellarRooms` in demo-state.jsx
   // drops any replayed `source: "stellar"` room as soon as a read lands, so in
@@ -127,6 +129,15 @@ export function ChainBoard() {
               <ChainRoomCard key={room.id} room={room} nowSeconds={nowSeconds} />
             ))}
           </div>
+          {/* The board can only read. This drops into the app's existing
+              local-simulation so a visitor can walk the create/kocok flow
+              hands-on -- clearly labelled a simulation, never a chain write. */}
+          <section className="chain-sim">
+            <button type="button" className="chain-sim-button" onClick={enterLocalSim}>
+              {SIM_CTA}
+            </button>
+            <p className="chain-sim-note">{SIM_NOTE}</p>
+          </section>
         </main>
       )}
     </div>

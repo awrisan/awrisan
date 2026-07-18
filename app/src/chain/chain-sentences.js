@@ -237,6 +237,10 @@ export const BOARD_LEAD = "Dibaca langsung dari smart contract di Stellar Testne
  */
 export const BOARD_BOUNDARY = "Halaman ini hanya membaca. Membuat room dan kocok butuh tanda tangan wallet — belum tersedia di web publik. Demo tulis berjalan lokal lewat gateway (lihat README).";
 
+/** The invitation into the local-simulation flow, and the honest promise it keeps. */
+export const SIM_CTA = "Coba buat room sendiri";
+export const SIM_NOTE = "Simulasi lokal di browser Anda — bukan transaksi blockchain, tanpa uang sungguhan. Muat ulang halaman untuk kembali ke data on-chain.";
+
 /** `CONTRACT_ID` in stellar-rpc.js. Public: lib.rs:40-45 says treat room metadata as public. */
 export const CONTRACT_LABEL = "Contract";
 export const EXPLORER_LINK = "Periksa di Stellar Expert";
