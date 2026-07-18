@@ -17,7 +17,11 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "auto",
+      // We register the worker ourselves in src/main.jsx (via virtual:pwa-register),
+      // so the plugin must NOT also inject its own bare registerSW.js — that
+      // injected script has no reload-on-activate wiring and would race our
+      // registration. false = "leave registration entirely to us".
+      injectRegister: false,
       includeAssets: ["awrisan-icon.png"],
       manifest: {
         name: "Awrisan",
